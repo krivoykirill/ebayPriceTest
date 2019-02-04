@@ -49,16 +49,15 @@ class HomeController extends Controller
         // !!!!!!!!     to do type   $query->type
         $type = 'keywords';
         $query=Query::where('id','=',$id)->first();
-        echo $query->type_value;
-
-        $url = 'http://krivoy.co.uk/ebaytest.php?'.$type.'='.$query->type_value;
-        urlencode($url);
-        $response = $this->connectService($url);
-        if ($response["code"]==200) {
+        //echo $query->type_value;
+        $value_encoded=urlencode($query->type_value);
+        $url = 'http://krivoy.co.uk/ebaytest.php?'.$type.'='.$value_encoded;
+        //echo $url;
+        $urlresponse = $this->connectService($url);
+        if ($urlresponse["code"]==200) {
             $view = view('show');
-            $view->with('query', $query);
-            $view->with('response',$response);
-            return $view;
+            $view->with('response',$urlresponse);
+            var_dump($urlresponse);
         }
         else {
             abort(404);

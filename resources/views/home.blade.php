@@ -19,7 +19,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{$query->type}}</h5>
                                     <p class="card-text">{{$query->type_value}}</p>
-                                    <a href="{{url('view/$query->id')}}" class="
+                                    <a href="{{url('view/'.$query->id)}}" class="
                                     @if ($query->type=='product')
                                         {{'btn btn-success'}}
                                     @else 
