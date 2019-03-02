@@ -15,9 +15,16 @@ class CreateUserQueriesTable extends Migration
     {
         Schema::create('user_queries', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('type');
-            $table->string('type_value');
+            $table->string('keywords');
+            $table->string('buying_type');
             $table->string('username');
+            $table->json('condition');
+            $table->integer('categoryId');
+            $table->boolean('checked')->default(false);
+            $table->dateTime('last_check')->nullable();
+            $table->string('productId')->nullable();
+            $table->integer('query_data_id')->nullable();
+            $table->string('thumbnail')->default('http://krivoy.co.uk/img/processing.jpg');
             $table->timestamps();
         });
     }

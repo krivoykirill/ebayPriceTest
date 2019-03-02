@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "66ca7343889332c2b8ecca11c251430c",
+    "content-hash": "76860d6ffd3702bb5df5b8dc925b4b47",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -208,6 +208,59 @@
                 "schedule"
             ],
             "time": "2018-06-06T03:12:17+00:00"
+        },
+        {
+            "name": "dts/ebay-sdk-php",
+            "version": "18.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/davidtsadler/ebay-sdk-php.git",
+                "reference": "42714ad203f0d37be53aa11fbe78b3eb6b18d34b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/davidtsadler/ebay-sdk-php/zipball/42714ad203f0d37be53aa11fbe78b3eb6b18d34b",
+                "reference": "42714ad203f0d37be53aa11fbe78b3eb6b18d34b",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "guzzlehttp/promises": "^1.1",
+                "guzzlehttp/psr7": "~1.0",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DTS\\eBaySDK\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "(Apache-2.0 and MIT)"
+            ],
+            "authors": [
+                {
+                    "name": "David T. Sadler",
+                    "email": "davidtsadler@googlemail.com",
+                    "homepage": "http://davidtsadler.com"
+                }
+            ],
+            "description": "An eBay SDK for PHP. Use the eBay API in your PHP projects.",
+            "homepage": "http://devbay.net/",
+            "keywords": [
+                "api",
+                "ebay",
+                "sdk"
+            ],
+            "time": "2018-06-28T21:22:49+00:00"
         },
         {
             "name": "egulias/email-validator",

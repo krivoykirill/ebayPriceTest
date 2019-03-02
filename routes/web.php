@@ -21,3 +21,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add', 'HomeController@add')->name('add');
 Route::post('/add/new','HomeController@new');
 Route::get('/view/{id}', 'HomeController@view')->name('view');
+Route::get('/histogram', 'ServiceController@showHistogram'); //to be changed

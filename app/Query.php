@@ -11,5 +11,9 @@ class Query extends Model
     ];
     protected $table = 'user_queries';
     public $timestamps=false;
+    protected $casts = [
+        'condition'=>'array'
+    ];
+
 
 }

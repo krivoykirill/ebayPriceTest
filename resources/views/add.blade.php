@@ -20,11 +20,34 @@
                             <input type="text" class="form-control" id="keywords" name="keywords" placeholder="iPhone 7 Plus 32GB Unlocked" required>
                         </div>
                         <div class="form-group">
-                            <label for="searchType">Search type: </label>
-                            <select name="search_type" class="form-control" id="searchType">
-                                <option value="keywords">Search by keywords</option>
-                                <option value="product">Search by product</option>
+                            <label for="buyingType">Buying type: </label>
+                            <select name="buying_type" class="form-control" id="buyingType" required>
+                                <option value="Auction">Auction</option>
+                                <option value="FixedPrice">Buy It Now</option>
+                                <option value="All">Both</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="condition">Condition: </label>
+                            <select name="condition[]" multiple class="form-control" id="condition" required>
+                                <option value="1000">New</option>
+                                <option value="1500">New(Other)</option>
+                                <option value="3000">Used</option>
+                                <option value="4000">Used, Very Good</option>
+                                <option value="5000">Used, Good</option>
+                                <option value="6000">Used, Acceptable</option>
+                                <option value="2000">Manufacturer Refurbished</option>
+                                <option value="2500">Seller Refurbished</option>
+                                <option value="7000">Faulty</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="categoryId">Category ID:</label>
+                            <input name ="categoryId" type="text" class="form-control" id="categoryId" rows="1" placeholder="9355" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="productId">Product ID (leave blank if unknown):</label>
+                            <input name ="productId" type="text" class="form-control" id="productId" rows="1" placeholder="225203615">
                         </div>
                         <!--
                         <div class="form-group">

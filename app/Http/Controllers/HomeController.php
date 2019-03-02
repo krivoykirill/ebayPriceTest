@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Query;
+use Illuminate\Support\Facades\Auth as AuthFacade;
 
 class HomeController extends Controller
 {
@@ -27,8 +28,7 @@ class HomeController extends Controller
     */
     public function index()
     {
-        //!!!!!!!!     fake user. will be changed
-        $username = 'loproom';
+        $username = AuthFacade::user()->name;
         $queries=Query::where('username', $username)->get();
         return view('home')->with('queries', $queries);
     }
@@ -37,27 +37,36 @@ class HomeController extends Controller
     }
     public function new() {
         $query = new Query;
-        //!!!!!!!!     fake user. will be changed
-        $query->username='loproom';
-        $query->type = $_POST["search_type"];
-        $query->type_value= $_POST["keywords"];
+        $query->username=AuthFacade::user()->name;
+        $query->keywords = $_POST["keywords"];
+        $query->buying_type = $_POST["buying_type"];
+        $query->condition = $_POST["condition"];
+        $query->categoryId = $_POST["categoryId"];
+
+        ($_POST["productId"]!=null)
+        ?$query->productId=$_POST["productId"]
+        :$query->productId=null;
+        
         $query->save();
+        //shell_exec("python3 /sajt/topy.py '.$query->id.'");
+        //to think about refreshing the page after that
         return redirect('home');
+        
         //print_r($_POST);
     }
     public function view($id){
         // !!!!!!!!     to do type   $query->type
-        $type = 'keywords';
         $query=Query::where('id','=',$id)->first();
+        if ($query==null) {
+            abort(404);
+        }
         //echo $query->type_value;
-        $value_encoded=urlencode($query->type_value);
-        $url = 'http://krivoy.co.uk/ebaytest.php?'.$type.'='.$value_encoded;
+        //$value_encoded=urlencode($query->type_value);
+        //$url = 'http://krivoy.co.uk/ebaytest.php?'.$type.'='.$value_encoded;
         //echo $url;
-        $urlresponse = $this->connectService($url);
+       /* $urlresponse = $this->connectService($url);
         if ($urlresponse["code"]==200) {
-            $view = view('show');
-            $view->with('response',$urlresponse);
-            var_dump($urlresponse);
+            
         }
         else {
             abort(404);
@@ -66,6 +75,10 @@ class HomeController extends Controller
 
         
        //echo $query;
+       */
+        $view = view('show');
+        $view->with('query',$query);
+        return $view;
     }
 
 
