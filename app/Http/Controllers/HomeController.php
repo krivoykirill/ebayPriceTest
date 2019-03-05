@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Query;
 use Illuminate\Support\Facades\Auth as AuthFacade;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+
+
 
 class HomeController extends Controller
 {
@@ -35,6 +39,14 @@ class HomeController extends Controller
     public function add() {
         return view('add');
     }
+    private function execInBackground($cmd) {
+        if (substr(php_uname(), 0, 7) == "Windows"){
+            pclose(popen("start /B ". $cmd, "r")); 
+        }
+        else {
+            exec($cmd . " > /dev/null &");  
+        }
+    } 
     public function new() {
         $query = new Query;
         $query->username=AuthFacade::user()->name;
@@ -46,14 +58,27 @@ class HomeController extends Controller
         ($_POST["productId"]!=null)
         ?$query->productId=$_POST["productId"]
         :$query->productId=null;
-        
         $query->save();
+        //$cmd = "python ".app_path()."\http\controllers\Py\statsGenerator.py ".$query->id;
+        //shell_exec($cmd);
         //shell_exec("python3 /sajt/topy.py '.$query->id.'");
         //to think about refreshing the page after that
-        return redirect('home');
-        
-        //print_r($_POST);
+
+        //return redirect('home');
+
+        $process = new Process('dir D:');
+        $process->setTimeout(600);
+        $process->setIdleTimeout(60);
+        $process->run();
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        echo $process->getOutput();
     }
+    
     public function view($id){
         // !!!!!!!!     to do type   $query->type
         $query=Query::where('id','=',$id)->first();

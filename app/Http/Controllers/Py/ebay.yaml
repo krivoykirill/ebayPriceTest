@@ -1,0 +1,27 @@
+name: ebay_api_config
+
+# Trading API Sandbox - https://www.x.com/developers/ebay/products/trading-api
+api.sandbox.ebay.com:
+    compatibility: 719
+    appid: KirilsKr-PriceAna-SBX-8393f3dea-a9fb68ff
+    certid: SBX-393f3dead104-a51f-4c5c-ba10-fad9
+    devid: 0e3acf83-1393-4ca0-9365-6ecea3ef72fe
+    token: ENTER_YOUR_TOKEN_HERE
+
+# Trading API - https://www.x.com/developers/ebay/products/trading-api
+api.ebay.com:
+    compatibility: 719
+    appid: KirilsKr-PriceAna-PRD-1393f3dea-cf269b6e
+    certid: ENTER_YOUR_CERTID_HERE
+    devid: PRD-393f3dea2d76-345c-4637-a9a4-fde8
+    token: ENTER_YOUR_TOKEN_HERE
+
+# Finding API - https://www.x.com/developers/ebay/products/finding-api
+svcs.ebay.com:
+    appid: MarkKobz-HapunKak-PRD-b16e2f5cf-5c58ea0f
+    version: 1.0.0
+
+# Shopping API - https://www.x.com/developers/ebay/products/shopping-api
+open.api.ebay.com:
+    appid: ENTER_YOUR_APPID_HERE
+    version: 671

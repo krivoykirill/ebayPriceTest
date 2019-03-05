@@ -23,17 +23,7 @@ class ServiceController extends Controller
     
 
     public function __construct() {
-        $this->config = require __DIR__.'/../../../ebayConfig.php';
-
         $this->middleware('auth');
-
-        $this->sdkConfig = [
-            'apiVersion'=>'903',
-            'siteId'=>'3',
-            'globalId'=>'EBAY-GB',
-            'credentials'=>$this->config["sandbox"]["credentials"]
-        ];
-
     }
     /*
     public function getToken() {
