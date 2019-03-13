@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Query;
+use App\QueryData;
 use Illuminate\Support\Facades\Auth as AuthFacade;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -39,14 +40,6 @@ class HomeController extends Controller
     public function add() {
         return view('add');
     }
-    private function execInBackground($cmd) {
-        if (substr(php_uname(), 0, 7) == "Windows"){
-            pclose(popen("start /B ". $cmd, "r")); 
-        }
-        else {
-            exec($cmd . " > /dev/null &");  
-        }
-    } 
     public function new() {
         $query = new Query;
         $query->username=AuthFacade::user()->name;
@@ -54,59 +47,53 @@ class HomeController extends Controller
         $query->buying_type = $_POST["buying_type"];
         $query->condition = $_POST["condition"];
         $query->categoryId = $_POST["categoryId"];
-
         ($_POST["productId"]!=null)
         ?$query->productId=$_POST["productId"]
         :$query->productId=null;
         $query->save();
-        //$cmd = "python ".app_path()."\http\controllers\Py\statsGenerator.py ".$query->id;
-        //shell_exec($cmd);
-        //shell_exec("python3 /sajt/topy.py '.$query->id.'");
-        //to think about refreshing the page after that
-
-        //return redirect('home');
-
-        $process = new Process('dir D:');
-        $process->setTimeout(600);
-        $process->setIdleTimeout(60);
-        $process->run();
-
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        echo $process->getOutput();
+        shell_exec("python3 ".app_path()."/Http/Controllers/Py/statsGenerator.py ".$query->id." > /dev/null 2>/dev/null &");
+        return redirect('home');
     }
     
     public function view($id){
-        // !!!!!!!!     to do type   $query->type
-        $query=Query::where('id','=',$id)->first();
-        if ($query==null) {
-            abort(404);
+        $query=Query::where('id','=',$id)->firstOrFail();
+        $username = AuthFacade::user()->name;
+        if($query->username!=$username){
+            abort(403);
         }
-        //echo $query->type_value;
-        //$value_encoded=urlencode($query->type_value);
-        //$url = 'http://krivoy.co.uk/ebaytest.php?'.$type.'='.$value_encoded;
-        //echo $url;
-       /* $urlresponse = $this->connectService($url);
-        if ($urlresponse["code"]==200) {
-            
-        }
-        else {
-            abort(404);
-        }
-
-
-        
-       //echo $query;
-       */
+        $data=QueryData::where('id','=',$query->query_data_id)->firstOrFail();
+        $queries=Query::where('username', $username)->get();
         $view = view('show');
         $view->with('query',$query);
+        $view->with('data',$data);
+        $view->with('queries',$queries);
+
         return $view;
     }
 
-
+    public function deleteAll(Request $request){
+        $ids = $request->ids;
+        foreach ($ids as $id) {
+            $query=Query::find($id);
+            if($query==null){
+                continue;
+            }
+            $username = AuthFacade::user()->name;
+            if($query->username!=$username){
+                continue;
+            }
+            $datas=QueryData::where('id','=',$query->query_data_id)->get();
+            if ($datas!=null){
+                foreach ($datas as $data){
+                    $data->delete();
+                }
+                $query->delete();
+            }
+        }
+        return response()->json($request);
+        //DB::table("products")->whereIn('id',explode(",",$ids))->delete();
+        //return response()->json(['success'=>"Products Deleted successfully."]);
+    }
     private function connectService($url){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
@@ -121,5 +108,25 @@ class HomeController extends Controller
             'response'=> $response
         ];
         return $return;
+    }
+    public function destroy($id){
+        $query=Query::find($id);
+        if($query==null){
+            abort(404);
+        }
+        $username = AuthFacade::user()->name;
+        if($query->username!=$username){
+            abort(403);
+        }
+        $datas=QueryData::where('id','=',$query->query_data_id)->get();
+        if ($datas!=null){
+            foreach ($datas as $data){
+                $data->delete();
+                echo "YAS ".$username;
+            }
+            $query->delete();
+        }
+        return redirect('home');
+        
     }
 }

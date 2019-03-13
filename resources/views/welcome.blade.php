@@ -12,9 +12,18 @@
          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         
 
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+
         
     </head>
     <body>
+        <img src="/img/BG.png" id="bg" alt="wallpaper">
         <!--
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
@@ -47,11 +56,11 @@
                 </div>
             </div>
         </div>-->
-        <div class="container">
-            <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <wrapper class="container d-flex flex-column">
+            <nav class="navbar navbar-expand-md navbar-dark">
                 <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name','ebayPriceTester') }}
+                        <img src="img/logo_on_dark.png" alt="logo"/>
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -68,11 +77,11 @@
                             <!-- Authentication Links -->
                             @guest
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                    <a class="nav-link btn btn-outline-success m-1" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                                 @if (Route::has('register'))
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                        <a class="nav-link btn btn-success m-1" href="{{ route('register') }}">{{ __('Register') }}</a>
                                     </li>
                                 @endif
                             @else
@@ -98,24 +107,30 @@
                     </div>
                 </div>
             </nav>
-            <section class="mt-5">
-                <h1 class="display-1 text-center">eBay Stats on steroids</h1>
+            <section class="mt-5" id="mainSection">
+                <h1 class="display-4 text-center text-white">Have you ever wondered if you are getting the most out of your listings?</h1>
+                <p class="text-light py-3 px-5 text-center">Sign up now and you'll discover a whole new world of eBay statistics.<br/> <strong class="ebay-color" style="font-weight:900;">eBayOnSteroids</strong> provides you with the opportunity of tracking trending prices on eBay. <br/>Apply gained knowledge onto your business and start boosting up your sales!</p>
                 @if (Route::has('login'))
                     <div class="mx-auto justify-content-center mt-5" style="width:14rem;">
                         @auth
-                            <a class="btn btn-success btn-lg col mb-1 " href="{{ url('/home') }}">Home</a>
+                            <a class="btn btn-success btn-lg col mb-1 cta" href="{{ url('/home') }}">Home</a>
                         @else
-                            <a class="btn btn-outline-success btn-lg col mb-1" href="{{ route('login') }}">Login</a>
-
                             @if (Route::has('register'))
-                                <a class="btn btn-success btn-lg col mb-1" href="{{ route('register') }}">Register</a>
+                                <a class="btn btn-outline-success btn-lg col mb-1 cta" href="{{ route('signup') }}">Look for a product <strong class="text-dark font-weight-bold">></strong></a>
                             @endif
                         @endauth
                     </div>
                 @endif
             </section>
 
-        </div>
+        </wrapper>
+        <footer class="container-fluid w-100 text-light py-4 mt-3 text-center">
+            <img src="img/logo_on_dark.png" alt="logo"/>
+            <br/>
+            <br/>
+            <p><strong class="ebay-color">eBayOnSteroids &copy;</strong>  2019 No Rights Reserved</p>
+        </footer>
+        
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

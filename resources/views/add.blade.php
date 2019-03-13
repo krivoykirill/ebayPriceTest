@@ -13,7 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <p style="color:red!important; font-size:1.1rem;">DISCLAIMER <br/>
+                The website is still under development. Considering the fact the response is limited to 10k of items due to EBAY API policy, please make more specific requests (The query response must contain less than 100000 records within last 3 months).
+            <br/>Also, you need to specify ebay category ID, here is some of them:  </p>
+                    <ul class="text-danger">
+                        <li>9355 - Mobile Phones</li>
+                        <li>111422 - Apple Laptops</li>
+                    </ul>
                     <form action="{{url('/add/new')}}" method="post">
                         <div class="form-group" >
                             <label for="keywords">Enter keywords: </label>
