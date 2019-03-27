@@ -30,7 +30,7 @@
                             <select name="buying_type" class="form-control" id="buyingType" required>
                                 <option value="Auction">Auction</option>
                                 <option value="FixedPrice">Buy It Now</option>
-                                <option value="All">Both</option>
+                                <option value="All">Both Types</option>
                             </select>
                         </div>
                         <div class="form-group">

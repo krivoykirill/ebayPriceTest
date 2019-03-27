@@ -5,70 +5,50 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
-
+                <div class="card-body bg-light row justify-content-center">
+                    <div class="col-md-8 text-center">
+                        <p class="display-4 text-secondary">Sign up</p>
+                        <form action="{{ route('register') }}" method="post">
+                            @csrf
+                            <div class="form-group">
+                                <input class="w-100 border-radius-30 text-center py-1 no-outline" name="name" type="text" placeholder="name" required />
                                 @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
+
+                                    <div class="invalid-feedback d-block" role="alert">
+                                        {{ $errors->first('name') }}
+                                    </div>
+
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
-
+                            <div class="form-group">
+                                <input class="w-100 border-radius-30 text-center py-1 no-outline" name="email" type="text" placeholder="email" required/>
                                 @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
+                                    @if (strlen($errors->first('email'))!=43)
+                                        <div class="invalid-feedback d-block" role="alert">
+                                            {{ $errors->first('email') }}
+                                        </div>
+                                    @endif
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
+                            <div class="form-group">
+                                <input class="w-100 border-radius-30 text-center py-1 no-outline" name="password" type="password" placeholder="password" required/>
                                 @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
+                                    <div class="invalid-feedback d-block" role="alert">
+                                        {{ $errors->first('password') }}
+                                    </div>
                                 @endif
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                            <div class="form-group">
+                                <input class="w-100 border-radius-30 text-center py-1 no-outline" name="password_confirmation" type="password" placeholder="confirm password" required/>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input p-1" id="agreement" required>
+                                <label class="form-check-label" for="agreement">I agree to the <strong class="ebay-color">Terms & Conditions</strong></label>
                             </div>
-                        </div>
-                    </form>
+                            <button type="submit" class="btn btn-outline-success cta-inverted w-100 p-2">Start analyzing</button>
+                        </form>
+                </div>
+                
                 </div>
             </div>
         </div>

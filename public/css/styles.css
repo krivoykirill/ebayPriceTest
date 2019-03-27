@@ -27,9 +27,10 @@ canvas {
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
 }
 
-
+/* Wallpaper  */
 body {
     background-color:#02162E;
+    
 }
 #bg {
     position: fixed; 
@@ -37,22 +38,29 @@ body {
     left: 0; 
     min-width: 100%;
     min-height: 100%;
-    z-index: -1;
+    z-index: -9999;
+    background-color: rgba(201, 206, 213,1) !important;
+
 }
-nav .btn {
+#thumbnail {
+    top: 0; 
+    left: 0; 
+    align-self: center;
+}
+
+
+/* Modified button classes */
+.btn {
     border-radius: 30px;
     min-width:6rem;
-    color:#e7e7e7 !important;
-}
-.ebay-color {
-    color:#01B78B!important;
+    color:white;
 }
 .cta {
     border-radius:30px;
     background-color: white !important;
     font-weight: bold;
-    color:#01B78B;
-
+    color:#01B78B !important;
+    border:1px solid #01B78B;
 }
 .cta:hover {
     background-color: #01B78B!important;
@@ -71,6 +79,32 @@ nav .btn {
     color:#01B78B!important;
     border:1px solid #01B78B;
 }
+.ebay-btn {
+    background-color: #01B78B;
+    border-radius: 30px;
+    color:white !important;
+    border:1px solid #01B78B;
+    font-weight: bold;
+}
+.ebay-btn:hover {
+    background-color: #019c76;
+}
+.ebay-btn-outline {
+    border-radius: 30px;
+    color:white !important;
+    border:1px solid #01B78B;
+    font-weight: bold;
+}
+.ebay-btn-outline:hover {
+    background-color: #01B78B;
+}
+
+
+
+
+.ebay-color {
+    color:#01B78B!important;
+}
 #mainSection p {
     font-size: 20px;
 }
@@ -86,14 +120,11 @@ body, wrapper {
  .card {
      background-color:rgba(255,255,255,0.5);
  }
- #dashboard {
-     
- }
  .content {
-    border-radius: 10px;
-    background-color: rgba(255,255,255,0.7);
+    border-radius: 0px;
+    background-color: rgba(255,255,255,1);
  }
- .col:not(:first-child),.col:not(:last-child) {
+ .coll:not(:first-child),.coll:not(:last-child) {
     padding-right:5px;
     padding-left:5px;
   }
@@ -110,27 +141,135 @@ body, wrapper {
 .no-outline {
     outline:0px !important;
     -webkit-appearance:none;
-    border:1px solid #8c8c8c;
+    
 }
 .invalid-feedback {
     font-weight:bold;
 }
-.ebay-btn {
-    background-color: #01B78B;
-    border-radius: 30px;
-    color:white;
-    border:1px solid #01B78B;
-    font-weight: bold;
-}
-.ebay-btn:hover {
-    background-color: #019c76;
-}
+
+/* Custom Colours */
 .ebay-color-red {
-    color:#b70116;
+    color:#fc5054;
 }
 .ebay-color-dblue {
-    color:#02162E;
+    color:#19486B;
 }
 .ebay-color-blue {
-    color:#018967!important;
+    color:#458E91!important;
 }
+.ebay-color-gray {
+    color:#9e9e9e;
+}
+#accOptions:hover {
+    background-color: #f3f3f3;
+}
+.search-element{
+    border-radius:30px;
+    border:1px solid #dfdfdf;
+    background-color: #f0f0f0;
+    font-weight: normal;
+    color:#959595;
+}
+.search-element-blue{
+    background-color: #458E91;
+    color:#ffffff !important;
+}
+.search-element-red{
+    background-color: #19486B;
+    color:#ffffff !important;
+}
+.element-dred{
+    background-color: #fc5054;
+    color:#ffffff !important;
+    border:0;
+}
+.element-dred:hover {
+    background-color: #ce4447;
+    color:#ffffff !important;
+    border:0;
+}
+.search-element-dark{
+    background-color: #cccccc;
+    color:#686868 !important;
+}
+.search-element-outlined{
+    background-color: #018967;
+}
+.list-inline-item{
+    margin:0;
+    margin-bottom: 0.3rem;
+}
+.list-inline-item:not(:last-child) {
+    margin-right: .01rem;
+}
+.cta-red {
+    border-radius:30px;
+    background-color: white !important;
+    font-weight: bold;
+    color:#ce4447 !important;
+    border:1px solid #ce4447;
+}
+.cta-red:hover {
+    background-color: #ce4447!important;
+    color:white!important;
+}
+.ebay-number{
+    font-size: 2.5rem;
+    font-weight: 550;
+
+}
+
+.secondary-text {
+    font-size: 0.8rem;
+}
+.period-switcher-btn{
+    background-color: #458E91;
+}
+.period-switcher-btn:hover{
+    background-color: #3c7a7d;
+}
+.blue-btn{
+    background-color: #458E91;
+}
+.blue-btn:hover{
+    background-color: #3c7a7d;
+    color:white;
+}
+.chosen {
+    background-color: #3c7a7d;
+}
+
+/*  Typography  */
+@media (max-width: 575.98px) { 
+    html {
+        font-size: 0.7rem;
+      }
+ }
+
+
+@media (min-width: 576px) and (max-width: 767.98px) { 
+    html {
+        font-size: 0.7rem;
+      }
+ }
+
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    html {
+        font-size: 0.85rem;
+      }
+ }
+
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    html {
+        font-size: 1rem;
+      }
+ }
+
+
+@media (min-width: 1200px) { 
+    html {
+        font-size: 1rem;
+      }
+ }
