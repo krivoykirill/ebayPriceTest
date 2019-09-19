@@ -119,6 +119,7 @@
                                 <a class="btn btn-outline-success btn-lg col mb-1 cta" href="{{ route('signup') }}">Look for a product <strong class="text-dark font-weight-bold">></strong></a>
                             @endif
                         @endauth
+                        <a class="btn btn-outline-success btn-lg col mb-1 cta-inverted" href="{{ route('demo') }}">Show demo</a>
                     </div>
                 @endif
             </section>

@@ -3,10 +3,12 @@
 /public/storage
 /storage/*.key
 /vendor
-/app/Http/Controllers/Py/*
+/app/Http/Controllers/Py/na/*
+/app/Http/Controllers/Py/env_info.py
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+

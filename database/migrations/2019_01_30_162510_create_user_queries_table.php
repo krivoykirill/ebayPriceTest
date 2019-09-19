@@ -19,7 +19,7 @@ class CreateUserQueriesTable extends Migration
             $table->string('buying_type');
             $table->string('username');
             $table->json('condition');
-            $table->integer('categoryId');
+            $table->integer('categoryId')->nullable();
             $table->boolean('checked')->default(false);
             $table->dateTime('last_check')->nullable();
             $table->string('productId')->nullable();

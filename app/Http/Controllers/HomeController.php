@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Auth;
 use App\Query;
 use App\QueryData;
+use App\Category;
 use Illuminate\Support\Facades\Auth as AuthFacade;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
@@ -34,11 +35,12 @@ class HomeController extends Controller
     public function index()
     {
         $username = AuthFacade::user()->name;
-        $queries=Query::where('username', $username)->get();
+        $queries=Query::where('username', $username)->get()->sortBy('created_at');
         return view('home')->with('queries', $queries);
     }
     public function add() {
-        return view('add');
+        $categories=Category::all();
+        return view('add')->with('categories',$categories);
     }
     public function new() {
         $query = new Query;
@@ -46,10 +48,15 @@ class HomeController extends Controller
         $query->keywords = $_POST["keywords"];
         $query->buying_type = $_POST["buying_type"];
         $query->condition = $_POST["condition"];
-        $query->categoryId = $_POST["categoryId"];
+
+        ($_POST["categoryId"]!=null)
+        ?$query->categoryId = $_POST["categoryId"]
+        :$query->categoryId=null;
+
         ($_POST["productId"]!=null)
         ?$query->productId=$_POST["productId"]
         :$query->productId=null;
+
         $query->save();
         shell_exec("python3 ".app_path()."/Http/Controllers/Py/statsGenerator.py ".$query->id." > /dev/null 2>/dev/null &");
         return redirect('home');
@@ -62,7 +69,8 @@ class HomeController extends Controller
             abort(403);
         }
         $data=QueryData::where('id','=',$query->query_data_id)->firstOrFail();
-        $queries=Query::where('username', $username)->get();
+        $queries=Query::where('username', $username)->get()->sortBy('created_at');
+        
         $view = view('show');
         $view->with('query',$query);
         $view->with('data',$data);
@@ -129,4 +137,15 @@ class HomeController extends Controller
         return redirect('home');
         
     }
+    public function refresh($id){
+        $query=Query::where('id','=',$id)->firstOrFail();
+        $username = AuthFacade::user()->name;
+        if($query->username!=$username){
+            abort(403);
+        }
+        
+        shell_exec("python3 ".app_path()."/Http/Controllers/Py/statsUpdater.py ".$id." > /dev/null 2>/dev/null &");
+        return redirect('home');
+    }
+
 }

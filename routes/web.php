@@ -1,5 +1,5 @@
 <?php
-
+use App\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +12,9 @@
 */
 
 Route::get('/', function () {
+    if (Auth::check()){
+        return redirect('home');
+    }
     return view('welcome');
 });
 
@@ -21,7 +24,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add', 'HomeController@add')->name('add');
 Route::post('/add/new','HomeController@new');
 Route::get('/view/{id}', 'HomeController@view')->name('view');
-//to do delete  https://itsolutionstuff.com/post/how-to-delete-multiple-records-using-checkbox-in-laravel-5-example.html
 Route::post('/delete','HomeController@deleteAll')->name('delete');
 Route::get('/signup',function () {
     if (Auth::check()){
@@ -31,6 +33,5 @@ Route::get('/signup',function () {
         return view('signup');
     }
 })->name('signup');
-Route::get('/testpost',function() {
-    return view('post');
-});
+Route::get('/refresh/{id}','HomeController@refresh');
+Route::get('/demo','DemoController@index')->name('demo');

@@ -21,7 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
 </head>
-<body>
+<body onload='init()'>
     <div class="bg-light"id="bg" alt="wallpaper"></div>
     <nav id="index" class="navbar navbar-expand-md navbar-light bg-white shadow mb-4 text-dark navbar-default sticky-top">
         <div class="container">
@@ -44,7 +44,7 @@
                     <!-- Authentication Links -->
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link btn btn-outline-success m-1 ebay-btn-outline" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link btn btn-outline-success m-1 ebay-btn" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                             <li class="nav-item">
@@ -77,6 +77,21 @@
     <wrapper class="container-fluid d-flex flex-column p-0" id="app">
         <main>
             <section class="container" id="dashboard">
+                @if (!empty($demo))
+                <div class="alert alert-secondary alert-dismissible fade show shadow-sm border" role="alert">
+                    <strong>This is a demonstration of User Dashboard. Please <a class="ebay-color font-weight-bold" href="{{ route('signup') }}">{{ __('Log in') }}</a> to start adding your own products.</strong>
+                        <br/>User specifies a product by keywords, buying type, condition and product category ID.
+                        <br/>The website  adds a record to the database with all data specified and executes a 
+                        <a class="ebay-color font-weight-bold" href="https://github.com/krivoykirill/ebayPriceTest/blob/master/app/Http/Controllers/Py/statsGenerator.py" alt="link to python script on GitHub">Python script</a> 
+                        that connects to eBay API (<strong>ebaysdk-python</strong>), generates multiple datasets and stores them in the database as a JSON object to process that data in the browser (<strong>JavaScript 'data' object</strong>, can be seen using DevTools).
+                        <br/>Along with that, it creates multiple Linear and Polynomial models and makes predictions on the Medians dataset ( <strong>Pandas</strong> and <strong>Scikit-learn</strong> libraries).
+                        <br/>All graphs were created using <strong>Chart.js</strong>; Date manipulations were done using <strong>Moment.js</strong>
+                        <br/><strong>GitHub repository is available <a class="ebay-color font-weight-bold" href="https://github.com/krivoykirill/ebayPriceTest" alt="Project's github repository">here</a></strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                @endif
                 <div class="row">
                     <div class="p-0 col-md-10 pl-0 mb-2 pr-0 pr-md-2 ">
                         <div class="content p-3 shadow-sm">
@@ -84,7 +99,7 @@
                             <div class="w-100 px-3 m-0">
                                     
                                 <div class="col-md-12 ml-auto" type="text" >
-                                    <div class="w-100 border-radius-30 no-outline pl-2 pt-1 pr-2 m-0">
+                                    <div class="w-100 border-radius-30 pl-2 pt-1 pr-2 m-0">
                                         <ul class="list-inline m-0">
                                             @if($query->buying_type=='Auction')
                                             <li class="list-inline-item shadow-sm search-element search-element-blue px-3 py-2 m-0">Auction</li>
@@ -131,7 +146,7 @@
                                                       Options
                                                     </button>
                                                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <a class="dropdown-item" href="#">Edit query</a>
+                                                        <a class="dropdown-item" href="{{url('/refresh/'.$query->id)}}">Update query</a>
                                                         <a class="dropdown-item" href="{{url('/add')}}">Add another query</a>
                                                         <a class="dropdown-item" href="#">Edit query</a>
                                                         <a class="dropdown-item" href="#">Delete query</a>

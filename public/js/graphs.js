@@ -1,11 +1,8 @@
-window.addEventListener('DOMContentLoaded', init, false);
 var chart1=null;
 var chart2=null;
 function init(){
-    
     var period ='Daily';
     initializeSums();
-
     initializePeriodSwitcher();
     initializeGraphs(period);
 
@@ -60,7 +57,7 @@ function initializeGraphs(period){
     if(chart1 != null){
         chart1.destroy();
     }
-    else if (chart2 != null){
+    if (chart2 != null){
         chart2.destroy();
     }
     if(period=='Daily'){
@@ -68,17 +65,20 @@ function initializeGraphs(period){
         context=document.getElementById('medians').getContext('2d');
         source = data.data.aggregates.medianes.daily;
         preds=Object.values(data.data.aggregates.predictions.daily);
-        createTimeSeriesGraph(period,context,source,preds,'Daily average prices'); 
+        polyPreds=Object.values(data.data.aggregates.predictions.dailyPoly);
+        createTimeSeriesGraph(period,context,source,preds,'Daily average prices',polyPreds); 
 
         context=document.getElementById('sums').getContext('2d');
         source = data.data.aggregates.sums.daily;
         createTimeSeriesSumGraph(context,source,'Total sold each day');
     }
     else if (period=='Weekly'){
-        preds=Object.values(data.data.aggregates.predictions.weekly);       
+        preds=Object.values(data.data.aggregates.predictions.weekly); 
+        polyPreds=Object.values(data.data.aggregates.predictions.weeklyPoly);      
         var context=document.getElementById('medians').getContext('2d');
         var source = data.data.aggregates.medianes.weekly;
-        createTimeSeriesGraph(period,context,source,preds,'Weekly average prices');
+        
+        createTimeSeriesGraph(period,context,source,preds,'Weekly average prices',polyPreds); 
 
         var context=document.getElementById('sums').getContext('2d');
         var source = data.data.aggregates.sums.weekly;
@@ -86,9 +86,10 @@ function initializeGraphs(period){
     }
     else if (period=='Monthly'){
         preds=Object.values(data.data.aggregates.predictions.monthly);
+        polyPreds=Object.values(data.data.aggregates.predictions.monthlyPoly);
         var context=document.getElementById('medians').getContext('2d');
-        var source = data.data.aggregates.medianes.montlhy;
-        createTimeSeriesGraph(period,context,source,preds,'Monthly average prices');
+        var source = data.data.aggregates.medianes.monthly;
+        createTimeSeriesGraph(period,context,source,preds,'Monthly average prices',polyPreds); 
 
         var context=document.getElementById('sums').getContext('2d');
         var source = data.data.aggregates.sums.monthly;
@@ -96,7 +97,7 @@ function initializeGraphs(period){
     }
 }
 
-function createTimeSeriesGraph(period,context,source,preds,label){
+function createTimeSeriesGraph(period,context,source,preds,label,polyPreds){
     var labelHalf=[];
     var chartData=[];
     //sepparating predictions in two to show it in two different colours
@@ -111,6 +112,7 @@ function createTimeSeriesGraph(period,context,source,preds,label){
     }
     var labels=labelHalf.concat(generateFutureMonth(period,labelHalf[labelHalf.length-1]));
     predictions=generateTwoDatasets(preds,labelHalf);
+    polyPredictions=generateTwoDatasets(polyPreds,labelHalf)
     chart1 = new Chart(context,{
         type: 'line',
         // The data for our dataset
@@ -125,17 +127,31 @@ function createTimeSeriesGraph(period,context,source,preds,label){
                 fill:false
             },
             {
-                label:'Predictions', 
-                backgroundColor: '#01B78B',
-                borderColor: '#01B78B',
-                data:predictions[1],
-                fill:false
-            },
-            {
                 label: label,
                 backgroundColor: '#458E91',
                 borderColor: '#458E91',
                 data: chartData,
+            },
+            {
+                label: 'Polynomial Regression',
+                backgroundColor: '#ce4447',
+                borderColor: '#ce4447',
+                data: polyPredictions[0],
+                fill:false
+            },
+            {
+                label:'Linear Regression Predictions', 
+                backgroundColor: '#01B78B',
+                borderColor: '#19486B',
+                data:predictions[1],
+                fill:false
+            },
+            {
+                label: 'Polynomial Regression Predictions',
+                backgroundColor: '#458E91',
+                borderColor: '#ce4447',
+                data: polyPredictions[1],
+                fill:false
             }]
         },
         // Configuration options go here
@@ -160,7 +176,7 @@ function createTimeSeriesSumGraph(context,source,label){
             datasets: [{
                 label: label,
                 backgroundColor: '#B3B3B3',
-                borderColor: '#B3B3B3',
+                borderColor: '#19486B',
                 data: chartData,
             }]
         },
@@ -184,12 +200,12 @@ function getDateFromISO(date){
 }
 function initializeSums() {
     var sums = data.data.aggregates.sums;
-    var monthlyMedianesArray=Object.values(data.data.aggregates.medianes.montlhy);
-    var daysPredictionsArray=Object.values(data.data.aggregates.predictions.daily);
+    var monthlyMedianesArray=Object.values(data.data.aggregates.medianes.monthly);
+    var daysPredictionsArray=Object.values(data.data.aggregates.predictions.weekly);
     dailyMeds=Object.keys(data.data.aggregates.medianes.daily);
     document.getElementById("itemsRetrieved").innerHTML=data.data.items.length;
     document.getElementById("totalSoldSince").innerHTML=data.data.items[data.data.items.length-1].end_time;
-    document.getElementById("totalSoldGBP").innerHTML="£ "+sums.all_time.toFixed(2);
+    document.getElementById("totalSoldGBP").innerHTML="£ "+parseFloat(sums.all_time).toFixed(2);
     document.getElementById("currentPrice").innerHTML="£ "+monthlyMedianesArray[monthlyMedianesArray.length-1].toFixed(2);
     document.getElementById("predictedPrice").innerHTML="£ "+daysPredictionsArray[daysPredictionsArray.length-1].toFixed(2);
     document.getElementById("predictionWidget").innerHTML=moment(dailyMeds[dailyMeds.length-1]).add(30,'d').format('dddd, MMMM Do');;

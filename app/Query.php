@@ -10,7 +10,6 @@ class Query extends Model
         'id','username','type','type_value'
     ];
     protected $table = 'user_queries';
-    public $timestamps=false;
     protected $casts = [
         'condition'=>'array'
     ];

@@ -30,6 +30,9 @@ canvas {
 /* Wallpaper  */
 body {
     background-color:#02162E;
+    font-size: 0.9rem;
+    font-weight: normal;
+    font-family: Nunito,sans-serif;
     
 }
 #bg {
@@ -113,12 +116,14 @@ footer {
 }
 body, wrapper {
     min-height:84vh;
+    
  }
  footer img {
      max-width: 100px;
  }
  .card {
-     background-color:rgba(255,255,255,0.5);
+     background-color:rgba(255,255,255,0);
+     border:0;
  }
  .content {
     border-radius: 0px;
@@ -141,6 +146,7 @@ body, wrapper {
 .no-outline {
     outline:0px !important;
     -webkit-appearance:none;
+    border:1px solid #d3d3d3;
     
 }
 .invalid-feedback {
@@ -273,3 +279,47 @@ body, wrapper {
         font-size: 1rem;
       }
  }
+ .list-group-categories {
+    max-height:120px;
+    overflow-y: scroll;
+  }
+.card-btn {
+    white-space: normal;
+    color:white !important;
+}
+
+
+/* Custom Colours */
+.ebay-bg-red {
+    background-color:rgb(0, 158, 119);
+}
+.ebay-bg-red:hover {
+    background-color:rgb(0, 112, 84);
+}
+.ebay-bg-dblue {
+    background-color:#19486B;
+}
+.ebay-bg-dblue:hover {
+    background-color:rgb(22, 64, 95);
+}
+.ebay-bg-blue {
+    background-color:#458E91!important;
+}
+.ebay-bg-blue:hover {
+    background-color:rgb(62, 124, 126)!important;
+}
+.ebay-bg-gray {
+    background-color:#666666;
+    color:rgb(47, 47, 47) !important;
+}
+.border-custom{
+    border:2px solid rgba(255,255,255,0.3);
+}
+
+/*  LAST UPDATED DATES MOMENTUM */
+.last-updated{
+
+}
+.pointer-disabled{
+    cursor:not-allowed;
+}
